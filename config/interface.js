@@ -25,6 +25,9 @@
 		删除一篇文章：api/article/remove?id=Aid	get		参数：当前文章的ID
 		修改一篇文章：api/article/update?id=Aid	post	参数：当前文章的ID
 		查询所有文章：api/article					get
+
+
+	怎么提交呢
  * 
  * 
  */
