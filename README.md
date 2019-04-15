@@ -1,195 +1,191 @@
-# manage-system #
-基于Vue.js 2.x系列 + Element UI 的后台管理系统解决方案。[线上地址](http://blog.gdfengshuo.com/example/work/)
+<p align="center">
+    <a href="https://www.iviewui.com">
+        <img width="200" src="https://file.iviewui.com/logo-new.svg">
+    </a>
+</p>
 
-[English document](https://github.com/lin-xin/manage-system/blob/master/README_EN.md)
+# iView Admin
 
-## 捐赠
-![微信扫一扫](http://blog.gdfengshuo.com/images/weixin.jpg)
+[![](https://img.shields.io/github/release/iview/iview-admin.svg)](https://github.com/iview/iview-admin/releases)
+[![](https://img.shields.io/travis/iview/iview-admin.svg?style=flat-square)](https://travis-ci.org/iview/iview-admin)
+[![vue](https://img.shields.io/badge/vue-2.5.10-brightgreen.svg?style=flat-square)](https://github.com/vuejs/vue)
+[![iview ui](https://img.shields.io/badge/iview-3.1.3-brightgreen.svg?style=flat-square)](https://github.com/iview/iview)
+[![npm](https://img.shields.io/npm/l/express.svg)]()
 
-## 前言 ##
-之前在公司用了Vue + Element组件库做了个后台管理系统，基本很多组件可以直接引用组件库的，但是也有一些需求无法满足。像图片裁剪上传、富文本编辑器、图表等这些在后台管理系统中很常见的功能，就需要引用其他的组件才能完成。从寻找组件，到使用组件的过程中，遇到了很多问题，也积累了宝贵的经验。所以我就把开发这个后台管理系统的经验，总结成这个后台管理系统解决方案。
+[更新日志](https://github.com/iview/iview-admin/releases)
 
-该方案作为一套多功能的后台框架模板，适用于绝大部分的后台管理系统（Web Management System）开发。基于vue.js,使用vue-cli脚手架快速生成项目目录，引用Element UI组件库，方便开发快速简洁好看的组件。分离颜色样式，支持手动切换主题色，而且很方便使用自定义主题色。
+[使用文档](https://lison16.github.io/iview-admin-doc/#/)
 
-## 功能 ##
-- [x] Element UI
-- [x] 登录/注销
-- [x] 表格
-- [x] 表单
-- [x] 图表 :bar_chart:
-- [x] 富文本编辑器
-- [x] markdown编辑器
-- [x] 图片拖拽/裁剪上传
-- [x] 支持切换主题色 :sparkles:
-- [x] 列表拖拽排序
+[在线访问](https://admin.iviewui.com/)
 
+[简化版模板](https://github.com/iview/iview-admin/tree/template)
 
-## 目录结构介绍 ##
+[教学视频(26课时)](https://segmentfault.com/ls/1650000016221751?utm_source=banner)
 
-	|-- build                            // webpack配置文件
-	|-- config                           // 项目打包路径
-	|-- src                              // 源码目录
-	|   |-- components                   // 组件
-	|       |-- common                   // 公共组件
-	|           |-- Header.vue           // 公共头部
-	|           |-- Home.vue           	 // 公共路由入口
-	|           |-- Sidebar.vue          // 公共左边栏
-	|		|-- page                   	 // 主要路由页面
-	|           |-- BaseCharts.vue       // 基础图表
-	|           |-- BaseForm.vue         // 基础表单
-	|           |-- BaseTable.vue        // 基础表格
-	|           |-- Login.vue          	 // 登录
-	|           |-- Markdown.vue         // markdown组件
-	|           |-- Readme.vue           // 自述组件
-	|           |-- Upload.vue           // 图片上传
-	|           |-- VueEditor.vue        // 富文本编辑器
-	|           |-- VueTable.vue         // vue表格组件
-	|   |-- App.vue                      // 页面入口文件
-	|   |-- main.js                      // 程序入口文件，加载各种公共组件
-	|-- .babelrc                         // ES6语法编译配置
-	|-- .editorconfig                    // 代码编写规格
-	|-- .gitignore                       // 忽略的文件
-	|-- index.html                       // 入口html文件
-	|-- package.json                     // 项目及工具的依赖配置文件
-	|-- README.md                        // 说明
+`注：在线版本会在开发版本新小版本发布后更新到相应版本，所以如果想体验最新版本iview-admin，请clone完整项目代码到本地运行。`
 
-
-## 安装步骤 ##
-
-	git clone https://github.com/lin-xin/manage-system.git      // 把模板下载到本地
-	cd manage-system    // 进入模板目录
-	npm install         // 安装项目依赖，等待安装完成之后
-
-## 本地开发 ##
-
-	// 开启服务器，浏览器访问 http://localhost:8080
-	npm run dev
-
-## 构建生产 ##
-
-	// 执行构建命令，生成的dist文件夹放在服务器下即可访问
-	npm run build
-
-## 组件使用说明与演示 ##
-
-### vue-schart ###
-vue.js封装sChart.js的图表组件。访问地址：[vue-schart](https://github.com/linxin/vue-schart)
-<p><a href="https://www.npmjs.com/package/vue-schart"><img src="https://img.shields.io/npm/dm/vue-schart.svg" alt="Downloads"></a></p>
-
-```JavaScript
-<template>
-    <div>
-        <schart :canvasId="canvasId"
-				:type="type"
-				:width="width"
-				:height="height"
-				:data="data"
-				:options="options"
-		></schart>
-    </div>
-</template>
-	
-<script>
-    import Schart from 'vue-schart';        // 导入Schart组件
-    export default {
-        data: function(){
-            return {
-                canvasId: 'myCanvas',       // canvas的id
-                type: 'bar',                // 图表类型
-                width: 500,
-                height: 400,
-                data: [
-                    {name: '2014', value: 1342},
-                    {name: '2015', value: 2123},
-                    {name: '2016', value: 1654},
-                    {name: '2017', value: 1795},
-                ],
-                options: {                  // 图表可选参数
-                    title: 'Total sales of stores in recent years'
-                }
-            }
-        },
-        components: {
-            Schart
-        }
-    }
-</script>
+## Install
+```bush
+// install dependencies
+npm install
+```
+## Run
+### Development
+```bush
+npm run dev
+```
+### Production(Build)
+```bush
+npm run build
 ```
 
-### element-ui ###
-一套基于vue.js2.0的桌面组件库。访问地址：[element](http://element.eleme.io/#/zh-CN/component/layout)
+## 加入QQ群，获取最新更新咨询，和3000+开发者交流学习
 
-### vue-datasource ###
-一个用于动态创建表格的vue.js服务端组件。访问地址：[vue-datasource](https://github.com/coderdiaz/vue-datasource)
+![image](https://github.com/iview/iview-admin/raw/2.0/src/assets/images/groups.jpg)
 
+## 简介
+&emsp;&emsp;iView admin是基于Vue.js，搭配使用[iView](https://www.iviewui.com) UI组件库形成的一套后台集成解决方案，由TalkingData前端可视化团队部分成员开发维护。iView admin遵守iView设计和开发约定，风格统一，设计考究，并且更多功能在不停开发中。
+如果您想查看iview-admin的更新动态，您可以到[更新日志](https://github.com/iview/iview-admin/releases)查看了解最新更新；如果您是新手，想快速入手iview-admin，您可以到[使用教程](https://github.com/iview/iview-admin/wiki)查看讲解；如果您想在线体验iview-admin，您可以到[在线访问](https://admin.iviewui.com/)体验。如果你只是想要一个清醒爽朗的界面，那你可以下载[简化版模板](https://github.com/iview/iview-admin/tree/template)来做开发。
 
+## 功能
 
-### Vue-Quill-Editor ###
-基于Quill、适用于Vue2的富文本编辑器。访问地址：[vue-quill-editor](https://github.com/surmon-china/vue-quill-editor)
+- 登录/登出
+- 权限管理
+    - 列表过滤
+    - 权限切换
+- 多语言切换
+- 组件
+    - 富文本编辑器
+    - Markdown编辑器
+    - 城市级联
+    - 图片预览编辑
+    - 可拖拽列表
+    - 文件上传
+    - 数字渐变
+    - split-pane
+- 表单编辑
+    - 文章发布
+    - 工作流
+- 表格
+    - 可拖拽排序
+    - 可编辑表格
+        - 行内编辑
+        - 单元格编辑
+    - 可搜索表格
+    - 表格导出数据
+        - 导出为Csv文件
+        - 导出为Xls文件
+    - 表格转图片
+- 错误页面
+    - 403页面
+    - 404页面
+    - 500页面
+- 高级路由
+    - 动态路由
+    - 带参页面
+- 换肤
+- 收缩侧边栏
+- tag标签导航
+- 面包屑导航
+- 全屏/退出全屏
+- 锁屏
+- 消息中心
+- 个人中心
 
-### Vue-SimpleMDE ###
-Vue.js的Markdown Editor组件。访问地址：[Vue-SimpleMDE](https://github.com/F-loat/vue-simplemde)
-
-
-
-### Vue-Core-Image-Upload ###
-一款轻量级的vue上传插件，支持裁剪。访问地址：[Vue-Core-Image-Upload](https://github.com/Vanthink-UED/vue-core-image-upload)
-
-
-
-
-## 其他注意事项 ##
-### 一、如果我不想用到上面的某些组件呢，那我怎么在模板中删除掉不影响到其他功能呢？ ###
-
-举个栗子，我不想用 vue-datasource 这个组件，那我需要分四步走。
-
-第一步：删除该组件的路由，在目录 src/router/index.js 中，找到引入改组件的路由，删除下面这段代码。
-
-```JavaScript
-{
-    path: '/vuetable',
-    component: resolve => require(['../components/page/VueTable.vue'], resolve)     // vue-datasource组件
-},
+## 文件结构
+```shell
+.
+├── build  项目构建配置
+├── config  开发相关配置
+├── public  打包所需静态资源
+└── src
+    ├── api  AJAX请求
+    └── assets  项目静态资源
+        ├── icons  自定义图标资源
+        └── images  图片资源
+    ├── components  业务组件
+    ├── config  项目运行配置
+    ├── directive  自定义指令
+    ├── libs  封装工具函数
+    ├── locale  多语言文件
+    ├── mock  mock模拟数据
+    ├── router  路由配置
+    ├── store  Vuex配置
+    ├── view  页面文件
+    └── tests  测试相关
 ```
 
-第二步：删除引入该组件的文件。在目录 src/components/page/ 删除 VueTable.vue 文件。
+## Links
 
-第三步：删除该页面的入口。在目录 src/components/common/Sidebar.vue 中，找到该入口，删除下面这段代码。
-	
-```HTML
-<el-menu-item index="vuetable">Vue表格组件</el-menu-item>
-```
+- [TalkingData](https://github.com/TalkingData)
+- [iView](https://github.com/iview/iview)
+- [Vue](https://github.com/vuejs/vue)
+- [Webpack](https://github.com/webpack/webpack)
 
-第四步：卸载该组件。执行以下命令：
-	
-	npm un vue-datasource -S
+## 效果展示
 
-完成。
+- 响应式布局首页
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/home.gif)
 
-### 二、如何切换主题色呢？ ###
+- 标签导航
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/page-tags.gif)
 
-第一步：打开 src/main.js 文件，找到引入 element 样式的地方，换成浅绿色主题。
+- 权限管理
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/access.gif)
 
-```javascript
-import 'element-ui/lib/theme-default/index.css';    // 默认主题
-// import '../static/css/theme-green/index.css';       // 浅绿色主题
-```
+- 可拖拽列表
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/dragable-list.gif)
 
-第二步：打开 src/App.vue 文件，找到 style 标签引入样式的地方，切换成浅绿色主题。
+- 图片预览编辑
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/image-editor.gif)
 
-```javascript
-@import "../static/css/main.css";
-@import "../static/css/color-dark.css";     /*深色主题*/
-/*@import "../static/css/theme-green/color-green.css";   !*浅绿色主题*!*/
-```
+- 文件上传
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/upload.gif)
 
-第三步：打开 src/components/common/Sidebar.vue 文件，找到 el-menu 标签，把 theme="dark" 去掉即可。
+- 数字渐变
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/count-to.gif)
 
-## 项目截图 ##
-### 默认皮肤 ###
+- split-pane
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/split-pane.gif)
 
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms1.png)
+- 文章发布
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/article-publish.gif)
 
-### 浅绿色皮肤 ###
+- 工作流
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/workflow.gif)
 
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms2.png)
+- 可拖拽表格
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/dragable-table.gif)
+
+- 可编辑表格
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/editable-table.gif)
+
+- 表格导出数据
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/exportable-table.gif)
+
+- 表格转图片
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/table2image.gif)
+
+- 错误页面
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/error-page.gif)
+
+- 锁屏
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/locking.gif)
+
+- 可收缩侧边栏
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/sidebarmenu.gif)
+
+- 主题切换
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/theme.gif)
+
+- 消息中心
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/message.gif)
+
+### 💖💖 If you find this project helpful, maybe you can buy me a coffee. 💖💖
+![image](https://github.com/iview/iview-admin/raw/dev/github-gif/code.png)
+
+
+## License
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2016-present, iView

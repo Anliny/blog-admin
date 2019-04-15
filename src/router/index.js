@@ -1,67 +1,61 @@
-import Vue from 'vue';
-import Router from 'vue-router';
+import Vue from 'vue'
+import Router from 'vue-router'
+import routes from './routers'
+import store from '@/store'
+import iView from 'iview'
+import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
+import config from '@/config'
+const { homeName } = config
 
-Vue.use(Router);
-
-export default new Router({
-    routes: [
-        {
-            path: '/',
-            redirect: '/login'
-        },
-        {
-            path: '/readme',
-            component: resolve => require(['../components/common/Home.vue'], resolve),
-            children:[
-                {
-                    path: '/',
-                    component: resolve => require(['../components/page/Readme.vue'], resolve)
-                },
-                {
-                    path: '/usertable',
-                    component: resolve => require(['../components/page/UserTable.vue'], resolve)
-                },
-                {
-                    path: '/blogindex',
-                    component: resolve => require(['../components/page/BlogIndex.vue'], resolve)
-                },
-                {
-                    path: '/basetable',
-                    component: resolve => require(['../components/page/BaseTable.vue'], resolve)
-                },
-                {
-                    path: '/vuetable',
-                    component: resolve => require(['../components/page/VueTable.vue'], resolve)     // vue-datasource组件
-                },
-                {
-                    path: '/baseform',
-                    component: resolve => require(['../components/page/BaseForm.vue'], resolve)
-                },
-                {
-                    path: '/vueeditor',
-                    component: resolve => require(['../components/page/VueEditor.vue'], resolve)    // Vue-Quill-Editor组件
-                },
-                {
-                    path: '/markdown',
-                    component: resolve => require(['../components/page/Markdown.vue'], resolve)     // Vue-Quill-Editor组件
-                },
-                {
-                    path: '/upload',
-                    component: resolve => require(['../components/page/Upload.vue'], resolve)       // Vue-Core-Image-Upload组件
-                },
-                {
-                    path: '/basecharts',
-                    component: resolve => require(['../components/page/BaseCharts.vue'], resolve)   // vue-schart组件
-                },
-                {
-                    path: '/drag',
-                    component: resolve => require(['../components/page/DragList.vue'], resolve)    // 拖拽列表组件
-                }
-            ]
-        },
-        {
-            path: '/login',
-            component: resolve => require(['../components/page/Login.vue'], resolve)
-        },
-    ]
+Vue.use(Router)
+const router = new Router({
+  routes,
+  mode: 'history'
 })
+const LOGIN_PAGE_NAME = 'login'
+
+const turnTo = (to, access, next) => {
+  if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问
+  else next({ replace: true, name: 'error_401' }) // 无权限，重定向到401页面
+}
+
+router.beforeEach((to, from, next) => {
+  iView.LoadingBar.start()
+  const token = getToken()
+  if (!token && to.name !== LOGIN_PAGE_NAME) {
+    // 未登录且要跳转的页面不是登录页
+    next({
+      name: LOGIN_PAGE_NAME // 跳转到登录页
+    })
+  } else if (!token && to.name === LOGIN_PAGE_NAME) {
+    // 未登陆且要跳转的页面是登录页
+    next() // 跳转
+  } else if (token && to.name === LOGIN_PAGE_NAME) {
+    // 已登录且要跳转的页面是登录页
+    next({
+      name: homeName // 跳转到homeName页
+    })
+  } else {
+    if (store.state.user.hasGetInfo) {
+      turnTo(to, store.state.user.access, next)
+    } else {
+      store.dispatch('getUserInfo').then(user => {
+        // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
+        turnTo(to, user.access, next)
+      }).catch(() => {
+        setToken('')
+        next({
+          name: 'login'
+        })
+      })
+    }
+  }
+})
+
+router.afterEach(to => {
+  setTitle(to, router.app)
+  iView.LoadingBar.finish()
+  window.scrollTo(0, 0)
+})
+
+export default router
