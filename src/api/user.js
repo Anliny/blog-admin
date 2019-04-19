@@ -1,12 +1,12 @@
 import axios from '@/libs/api.request'
-
-export const login = ({ userName, password }) => {
-  const data = {
-    userName,
+var qs = require('qs')
+export const login = ({ username, password }) => {
+  const data = qs.stringify({
+    username,
     password
-  }
+  })
   return axios.request({
-    url: 'login',
+    url: '/api/authenticate',
     data,
     method: 'post'
   })
@@ -14,7 +14,7 @@ export const login = ({ userName, password }) => {
 
 export const getUserInfo = (token) => {
   return axios.request({
-    url: 'get_info',
+    url: '/api/userInfo',
     params: {
       token
     },
